@@ -1,0 +1,123 @@
+<%- include('../layouts.ejs')%>
+
+
+<section>
+    <div class="container mt-4 mb-5" >
+        <div class="row">
+            <div class="col-md-6 mx-auto"> <!-- Center the form on medium screens -->
+                <h2 class="text-center">Add Products</h2>
+                <% if (locals.msg) { %>
+                    <div class="alert alert-success">
+                        <strong><%= msg %> </strong>
+                    </div>  
+                <% } %>
+                <p class="text-center text-success"><%= msg %></p>
+                <p class="text-success text-center"></p>
+                <form action="/admin/add-product" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                    <div class="mb-3">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" class="form-control">
+                        <div class="error text-danger"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="category">Category</label>
+                        <select class="form-select" name="category" id="category" aria-label="Default select example">
+                            <% cateData.forEach((category) => { %>
+                            <option value="<%= category.categoryName %> "><%= category.categoryName %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="price">Price</label>
+                        <input type="number" name="price" id="price" class="form-control">
+                        <div class="error text-danger"></div>
+                        <div class="price-error text-danger"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="originalprice">Original Price*</label>
+                        <input type="number" name="originalprice" id="originalprice" class="form-control">
+                        <div class="error text-danger"></div>
+                        <div class="price-error text-danger"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="offers">Offers</label>
+                        <input type="number" name="offers" id="offers" class="form-control">
+                        <div class="error text-danger"></div>
+                        <div class="price-error text-danger"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" name="quantity" id="quantity" class="form-control">
+                        <div class="error text-danger"></div>
+                        <div class="price-error text-danger"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="discription">Description</label>
+                        <input type="text" name="discription" id="discription" class="form-control">
+                        <div class="error text-danger"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="image">Image</label>
+                        <input type="file" name="image" id="formFileMultiple" class="form-control" multiple>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success mt-4">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    function validateForm() {
+        const nameInput = document.getElementById('name');
+        const categoryInput = document.getElementById('category');
+        const priceInput = document.getElementById('price');
+        const originalPriceInput = document.getElementById('originalprice');
+        const offersInput = document.getElementById('offers');
+        const quantityInput = document.getElementById('quantity');
+        const priceError = document.querySelector('.price-error')
+        const errorElement = document.querySelector('.error')
+
+
+        if (!nameInput.value || !categoryInput.value || !priceInput.value || !originalPriceInput.value || !offersInput.value || !quantityInput.value) {
+            // alert('Please fill in all the required fields.');
+            errorElement.innerHTML = 'Please fill in the required fields.'
+            return false; // Prevent form submission
+        }
+
+
+
+        const priceValue = parseFloat(priceInput.value);
+        const originalPriceValue = parseFloat(originalPriceInput.value);
+        const offersValue = parseFloat(offersInput.value);
+        const quantityValue = parseFloat(quantityInput.value);
+
+        if (priceValue < 0 && originalPriceValue < 0 && offersValue < 0 && quantityValue < 0) {
+            // alert('Please enter non-negative values for Price, Original Price, Offers, and Quantity.');
+            priceError.innerHTML="Please enter non-negative values"
+            return false; // Prevent form submission
+        }
+
+        if (originalPriceValue < priceValue) {
+            const message= 'Original Price cannot be less than Price.'
+            errorElement.innerText = message;
+            // alert('Original Price cannot be less than Price.');
+            return false; // Prevent form submission
+        }
+
+        // Additional validations can be added here if needed
+
+        return true; // Allow form submission
+    }
+</script>

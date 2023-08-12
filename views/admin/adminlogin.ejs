@@ -1,0 +1,126 @@
+<%- include('../layouts.ejs')%>
+
+<nav class="navbar navbar-expand-lg  bg-white rounded">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="/admin/login"><img src="/assets/images/navlogo.png" alt="" class="img-fluid"
+        width="96"></a>
+      <a class="navbar-brand" id="logo" href="#">E-shop</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse ms-5" id="navbarSupportedContent">
+        
+      </div>
+    </div>
+  </nav>
+
+<div class="container" id="login-admin">
+    <form action="/admin/login" method="post" id="form" class="form m-auto bg-light rounded-4 mt-5 p-4 w-50" name="submit-form">
+        <h1 class="text-center mt-1" >Admin Login</h1>
+        <% if (locals.msg) { %>
+          <div class="alert alert-danger text-center">
+            <strong><%= msg %> </strong>
+          </div>
+        <% } %> 
+        <% if (locals.errmsg) { %>
+          <div class="alert alert-danger text-center">
+            <strong><%= errmsg %> </strong>
+          </div>
+        <% } %> 
+         <div id="login-success-message" class="hidden"></div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="text" class="form-control" id="email" name="email" oninput="validateEmail()">
+         <div class="error text-danger"></div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" oninput="validatePassword()">
+        <div class="error text-danger"></div>
+      </div>
+    <div class="text-center ">
+        <button type="submit" class="btn  w-100" id="submit">Login</button>
+    </div>
+    <div class="m-auto text-center m-4" id="to-signup">
+        <a href="#" style="text-decoration: none;">Forgot Passsword ?</a>
+      </div>
+    </form>
+    </form>
+  </div>
+
+  <script>
+    // login submission validation
+
+//submission
+const form = document.querySelector('#form')
+const useremail = document.querySelector('#email');
+const password = document.querySelector('#password');
+//  {{!-- const successMessage = document.getElementById("login-success-message");
+// successMessage.classList.remove("hidden");
+//  setTimeout(function() {
+//   successMessage.classList.add("hidden");
+// }, 3000); --}}
+
+form.addEventListener('submit',(e)=>{
+ 
+ if(!validateInputs()){
+     e.preventDefault();
+ }
+})
+
+function validateInputs(){
+ const useremailVal = useremail.value.trim()
+ const passwordVal = password.value.trim();
+ let success = true
+
+ if(useremailVal===''){
+     success=false;
+     setError(useremail,'email Id is required')
+ }
+ else{
+     setSuccess(useremail)
+ }
+
+
+ if(passwordVal === ''){
+     success= false;
+     setError(password,'Password is required')
+ }
+ else if(passwordVal.length<5){
+     success = false;
+     setError(password,'Password must be atleast 5 characters long')
+ }
+ else{
+     setSuccess(password)
+ }
+
+ return success;
+
+}
+
+function setError(element,message){
+ const inputGroup = element.parentElement;
+ const errorElement = inputGroup.querySelector('.error')
+
+ errorElement.innerText = message;
+ inputGroup.classList.add('error')
+ inputGroup.classList.remove('success')
+}
+
+function setSuccess(element){
+ const inputGroup = element.parentElement;
+ const errorElement = inputGroup.querySelector('.error')
+
+ errorElement.innerText = '';
+ inputGroup.classList.add('success')
+ inputGroup.classList.remove('error')
+}
+  </script>

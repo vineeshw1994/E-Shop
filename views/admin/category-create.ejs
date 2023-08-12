@@ -1,0 +1,118 @@
+<%- include('../layouts.ejs')%>
+
+<nav class="navbar navbar-expand-lg  bg-white rounded">
+    <div class="container">
+      <a class="navbar-brand" id="logo" href="#">E-shop</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse ms-5" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/admin/dashboard">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/admin/view-product">products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/category">catagories</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/users" class="nav-link pe-auto">users</a>
+          </li>
+          <!-- <form class="d-flex ms-5" role="search">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form> -->
+        </ul>
+        <% if(admin){%>
+        <div class="col-3">
+          <a href="/admin/Login"></i><button class="btn btn-info">Login</button></a>
+          <!-- <i class="fa-solid fa-user"></i> -->
+        </div>
+        <%}else {%>
+          <div class="col-3">
+            <a href="/admin/signout"></i><button class="btn btn-info">Signout</button></a>
+            <!-- <i class="fa-solid fa-user"></i> -->
+          </div>
+          <%}%>
+        <p class="mt-3 ms-2 text-success"></p>
+      </div>
+    </div>
+  </nav>
+
+<div class="container py-2 h-50 w-50 ">
+    <div class="row d-flex justify-content-center align-items-center bg-info ">
+        <div class="card" style="border-radius: 1rem;">
+
+            <form class="p-5 bg-light" method="POST" action="/admin/create-category">
+
+                <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Add Category
+                </h3>
+                <% if (locals.msg) { %>
+                    <div class="alert alert-success">
+                      <strong><%= msg %> </strong>
+                    </div>
+                  <% } %> 
+
+                <div class="form-outline mb-4 row">
+                    <div class="col-md-12">  <label class="form-label" for="name">Category Name</label>
+                        <input type="categoryName" required id="categoryName" name="categoryName"
+                            class="form-control form-control-md" />
+                            <div class="error text-danger"></div>
+                            <% if (locals.errmsg) { %>
+                                <div class="alert alert-danger">
+                                  <strong><%= errmsg %> </strong>
+                                </div>
+                              <% } %> </div>
+                  
+                </div>
+
+                <div class="form-outline mb-4 row">
+                    <div class="col-md-12">
+                        <label class="form-label" for="description">Description</label>
+                    <input type="text" name="discription" class="form-control form-control-md">
+                    <div class="error text-danger"></div>
+                    </div>
+                   
+                </div>
+                <div class="form-outline mb-4 row">
+                    <!-- <input type="isAvailable" required id="isAvailable" name="isAvailable"
+                        class="form-control form-control-lg" /> -->
+                        <div class="col-md-12">
+                            <label class="form-label" for="isAvailable">isAvailable</label><br>
+                        <input type="radio" id="Yes" name="fav_language" value="true">
+                        <label for="Yes">Yes</label><br>
+                        <input type="radio" id="No" name="fav_language" value="false">
+                        <label for="No">No</label><br>
+                        </div>
+                    
+                </div>
+
+                <div class="pt-1 mb-2 row">
+                    <div class="col-md-12">
+                        <button class="btn btn-dark btn-lg btn-block  mx-auto" type="submit">Create</button>
+
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
+</section>
+
+
