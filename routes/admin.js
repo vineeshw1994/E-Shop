@@ -56,6 +56,9 @@ admin_router.post('/create-category', admincontroller.create_category_post)
 admin_router.get('/edit-category', admincontroller.edit_categories)
 admin_router.post('/category-edit',admincontroller.categoryEditpost)
 admin_router.get('/delete-category',admincontroller.delete_category)
+admin_router.post('/unlistCategory/:id',admincontroller.unlistCategory)
+admin_router.post('/listCategory/:id',admincontroller.listCategory)
+
 
 
 //order
